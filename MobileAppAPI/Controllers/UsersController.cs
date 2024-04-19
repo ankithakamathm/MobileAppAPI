@@ -68,7 +68,7 @@ namespace MobileAppAPI.Controllers
                 var decryptedPassword = Helper.Decrypt(userPassword, _configuration["EncryptionKey"]);
                 if (password == decryptedPassword)
                 {
-                    var responseDTO = await _accountService.CheckLogin(username, userPassword);
+                    var responseDTO = await _accountService.CheckLogin(username);
                     if (responseDTO.IsSuccess)
                     {
                         return new OkObjectResult(new { MessageKey = "success", Result = new { Users = responseDTO.UserInfo } });
@@ -80,7 +80,7 @@ namespace MobileAppAPI.Controllers
                 }
                 else
                 {
-                    ; return new InternalServerErrorObjectResult(new { Messagekey = "Username or Password is wrong" });
+                    return new InternalServerErrorObjectResult(new { Messagekey = "Username or Password is wrong" });
                 }
             }
             catch (Exception e)
