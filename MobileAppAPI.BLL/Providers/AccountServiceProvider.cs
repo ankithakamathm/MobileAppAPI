@@ -34,9 +34,9 @@ namespace MobileAppAPI.BLL
         {
             return repository.UpdatePassword(details);
         }
-        public Task<UserDTO> CheckLogin(string userName, string password)
+        public Task<UserDTO> CheckLogin(string userName)
         {
-            return repository.CheckLogin(userName, password);
+            return repository.CheckLogin(userName);
         }
 
         public Task<string> GetPassword(string userName)

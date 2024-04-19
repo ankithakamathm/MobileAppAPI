@@ -112,7 +112,7 @@ namespace MobileAppAPI.DAL
             }
         }
 
-        public async Task<UserDTO> CheckLogin(string userName, string password)
+        public async Task<UserDTO> CheckLogin(string userName)
         {
             var model = new UserDTO();
             try
@@ -123,7 +123,7 @@ namespace MobileAppAPI.DAL
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
                         sqlCommand.Parameters.AddWithValue("@UserName", userName);
-                        sqlCommand.Parameters.AddWithValue("@Password", password);
+                        //sqlCommand.Parameters.AddWithValue("@Password", password);
                         DataTable dt = new DataTable();
                         
 
