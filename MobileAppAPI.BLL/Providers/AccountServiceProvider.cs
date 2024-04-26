@@ -5,7 +5,7 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MobileAppAPI.BLL
+namespace MobileAppAPI.BLL.Interfaces
 {
     public class AccountServiceProvider : IAccountService
     {
@@ -44,6 +44,14 @@ namespace MobileAppAPI.BLL
             return repository.GetPassword(userName);
         }
 
+        public Task<UserDTO> RegisterUser(string username, string encryptedPassword, string email, string phoneNumber)
+        {
+            return repository.RegisterUser(username, encryptedPassword, email, phoneNumber);
+        }
 
+        public Task<bool> checkIfUserExistsAlready(string phoneNumber)
+        {
+            return repository.checkIfUserExistsAlready(phoneNumber);
+        }
     }
 }

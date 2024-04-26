@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MobileAppAPI.Models;
 using MobileAppAPI.DAL;
-using MobileAppAPI.BLL;
+using MobileAppAPI.BLL.Interfaces;
 using MobileAppAPI.WebApi.Helpers;
 using Helper = MobileAppAPI.WebApi.Helpers.Helper;
 
@@ -82,6 +82,44 @@ namespace MobileAppAPI.Controllers
                 {
                     return new InternalServerErrorObjectResult(new { Messagekey = "Username or Password is wrong" });
                 }
+            }
+            catch (Exception e)
+            {
+                return new InternalServerErrorObjectResult(new { MessageKey = e.Message });
+            }
+        }
+
+
+        [HttpPost]
+        [Route("Register")]
+        public async Task<ActionResult> register(string username, string password, string email, string phoneNumber)
+        {
+
+
+            try
+            {
+                bool res = await _accountService.checkIfUserExistsAlready(phoneNumber);
+
+                if (res) {
+                    var encryptedPassword = Helper.Encrypt(password, _configuration["EncryptionKey"]);
+
+                    var responseDTO = await _accountService.RegisterUser(username, encryptedPassword, email, phoneNumber);
+                    if (responseDTO.IsSuccess)
+                    {
+                        return new OkObjectResult(new { MessageKey = "success", Result = new { Users = responseDTO.UserInfo } });
+                    }
+                    else
+                    {
+                        return new InternalServerErrorObjectResult(new { MessageKey = responseDTO.Message });
+                    }
+                }
+                else
+                {
+                    return new InternalServerErrorObjectResult(new { Messagekey = "User with same phone number exists already" });
+                }
+            
+
+
             }
             catch (Exception e)
             {

@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using MobileAppAPI.Models;
 using MobileAppAPI.BLL;
 using MobileAppAPI.DAL;
+using MobileAppAPI.BLL.Interfaces;
 
 namespace MobileAppAPI
 {

@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Reflection;
 using MobileAppAPI.BLL;
 using System.Globalization;
+using MobileAppAPI.BLL.DTO;
 
 namespace MobileAppAPI.DAL
 {
@@ -166,6 +167,89 @@ namespace MobileAppAPI.DAL
                 return model;
             }
         }
+
+        public async Task<bool> checkIfUserExistsAlready(string phoneNumber)
+        {
+            bool result = false;
+            try
+            {
+                using (var sqlConnection = new SqlConnection(connectionString))
+                {
+                    using (var sqlCommand = new SqlCommand("spGetUserwithNumber", sqlConnection))
+                    {
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddWithValue("@phoneNumber", phoneNumber);
+                        //sqlCommand.Parameters.AddWithValue("@Password", password);
+                        sqlConnection.Open();
+                        result = Convert.ToInt32(sqlCommand.ExecuteScalar()) > 0 ? true : false;
+                        sqlConnection.Close();
+                    }
+                       
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                //Handle exception
+                return result;
+            }
+        }
+        public async Task<UserDTO> RegisterUser(string username, string encryptedPassword, string email, string phoneNumber)
+        {
+            var model = new UserDTO();
+            try
+            {
+                using (var sqlConnection = new SqlConnection(connectionString))
+                {
+                    using (var sqlCommand = new SqlCommand("spRegisterNewUser", sqlConnection))
+                    {
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddWithValue("@UserName", username);
+                        sqlCommand.Parameters.AddWithValue("@Password", encryptedPassword);
+                        sqlCommand.Parameters.AddWithValue("@Email", email);
+                        sqlCommand.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+                        DataTable dt = new DataTable();
+
+
+                        var dataAdapter = new SqlDataAdapter(sqlCommand);
+
+                        dataAdapter.Fill(dt);
+                        if (dt.Rows.Count > 0)
+                        {
+                            var dr = dt.Rows[0];
+                            model.UserInfo = new UserInfo
+                            {
+                                Id = Convert.ToInt32(dr["Id"].ToString()),
+                                FirstName = (dr["First Name"] is DBNull || string.IsNullOrEmpty(dr["First Name"].ToString())) ? "" : dr["First Name"].ToString(),
+                                LastName = (dr["Last Name"] is DBNull || string.IsNullOrEmpty(dr["Last Name"].ToString())) ? "" : dr["Last Name"].ToString(),
+                                PhoneNumber = (dr["PhoneNumber"] is DBNull || string.IsNullOrEmpty(dr["PhoneNumber"].ToString())) ? "" : dr["PhoneNumber"].ToString(),
+                                Email = (dr["Email"] is DBNull || string.IsNullOrEmpty(dr["Email"].ToString())) ? "" : dr["Email"].ToString(),
+                                Password = (dr["Password"] is DBNull || string.IsNullOrEmpty(dr["Password"].ToString())) ? "" : dr["Password"].ToString(),
+                                IsAdmin = Convert.ToBoolean(dr["IsAdmin"].ToString()),
+                                IsCustomer = Convert.ToBoolean(dr["IsCustomer"].ToString()),
+                                UserName = (dr["UserName"] is DBNull || string.IsNullOrEmpty(dr["UserName"].ToString())) ? "" : dr["UserName"].ToString(),
+
+                            };
+                            model.IsSuccess = true;
+                            model.Message = "info-fetch-getallusers-success";
+                        }
+                        else
+                        {
+                            model.IsSuccess = true;
+                            model.Message = "nodata";
+                        }
+                    }
+                }
+                return model;
+            }
+            catch (Exception ex)
+            {
+                //Handle exception
+                model.IsSuccess = false;
+                model.Message = "error-fetch-getallusers-failed";
+                return model;
+            }
+        }
         public async Task<string> GetPassword(string userName)
         {
             var password = "";
@@ -196,7 +280,56 @@ namespace MobileAppAPI.DAL
 
         #endregion
 
+        #region category
+        public async Task<CategoryDTO> GetAllCategories()
+        {
+            var model = new CategoryDTO();
+            try
+            {
+                using (var sqlConnection = new SqlConnection(connectionString))
+                {
+                    using (var sqlCommand = new SqlCommand("spGetAllCategories", sqlConnection))
+                    {
+                        DataTable dt = new DataTable();
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
 
+                        var dataAdapter = new SqlDataAdapter(sqlCommand);
+
+                        dataAdapter.Fill(dt);
+                        if (dt.Rows.Count > 0)
+                        {
+                            model.CategoryDetails = dt.AsEnumerable().Select(dr =>
+                            new CategoryInfo
+                            {
+                                Id = Convert.ToInt32(dr["Id"].ToString()),
+                                Name = (dr["Name"] is DBNull || string.IsNullOrEmpty(dr["Name"].ToString())) ? "" : dr["Name"].ToString(),
+                                
+                                Active = Convert.ToBoolean(dr["Active"].ToString()),
+
+
+                            }).ToList();
+                            model.IsSuccess = true;
+                            model.Message = "info-fetch-getallcategories-success";
+                        }
+                        else
+                        {
+                            model.IsSuccess = true;
+                            model.Message = "nodata";
+                        }
+                    }
+                }
+                return model;
+            }
+            catch (Exception ex)
+            {
+                //Handle exception
+                model.IsSuccess = false;
+                model.Message = "error-fetch-getallcategories-failed";
+                return model;
+            }
+        }
+
+        #endregion
 
 
 

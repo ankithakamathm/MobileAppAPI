@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MobileAppAPI.BLL
+namespace MobileAppAPI.BLL.Interfaces
 {
     public interface IAccountService
     {
@@ -19,7 +19,7 @@ namespace MobileAppAPI.BLL
 
         Task<Boolean> UpdatePassword(UserPersonalDetails details);
         Task<string> GetPassword(string username);
-
-
+        Task<UserDTO> RegisterUser(string username, string encryptedPassword, string email, string phoneNumber);
+        Task<bool> checkIfUserExistsAlready(string phoneNumber);
     }
 }
