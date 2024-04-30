@@ -15,6 +15,7 @@ using MobileAppAPI.Models;
 using MobileAppAPI.BLL;
 using MobileAppAPI.DAL;
 using MobileAppAPI.BLL.Interfaces;
+using MobileAppAPI.BLL.Providers;
 
 namespace MobileAppAPI
 {
@@ -48,6 +49,7 @@ namespace MobileAppAPI
     opt.UseInMemoryDatabase("MobileApp"));
             services.AddScoped<IMobileAppDataRepository, MobileAppDataRepository>();
             services.AddTransient<IAccountService, AccountServiceProvider>();
+            services.AddTransient<ICategoryService, CategoryServiceProvider>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

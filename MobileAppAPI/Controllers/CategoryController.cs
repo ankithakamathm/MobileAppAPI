@@ -11,7 +11,7 @@ using MobileAppAPI.BLL.Interfaces;
 
 namespace MobileAppAPI.Controllers
 {
-    [Route("Categories")]
+    [Route("Category")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -27,9 +27,10 @@ namespace MobileAppAPI.Controllers
             _logging = new DAL.LoggingHelper(_configuration);
             _httpContext = httpContextAccessor.HttpContext;
         }
-        
-        // GET: api/GetCategories
+
+        // GET: Categories/GetCategories
         [HttpGet]
+        [Route("GetCategories")]
         public async Task<ActionResult> GetCategories()
         {
 
