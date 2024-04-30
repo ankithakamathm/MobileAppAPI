@@ -40,7 +40,7 @@ namespace MobileAppAPI.Controllers
                 var responseDTO = await _categoryService.GetAllCategories();
                 if (responseDTO.IsSuccess)
                 {
-                    return new OkObjectResult(new { MessageKey = "success", Result = new { Users = responseDTO.CategoryDetails } });
+                    return new OkObjectResult(new { MessageKey = "success", Result = new { Categories = responseDTO.CategoryDetails } });
                 }
                 else
                 {
