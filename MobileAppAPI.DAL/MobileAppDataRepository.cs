@@ -305,7 +305,7 @@ namespace MobileAppAPI.DAL
                                 Name = (dr["Name"] is DBNull || string.IsNullOrEmpty(dr["Name"].ToString())) ? "" : dr["Name"].ToString(),
                                 
                                 Active = Convert.ToBoolean(dr["Active"].ToString()),
-
+                                Image= (dr["Image"] is DBNull || string.IsNullOrEmpty(dr["Image"].ToString())) ? "" : dr["Image"].ToString(),
 
                             }).ToList();
                             model.IsSuccess = true;
