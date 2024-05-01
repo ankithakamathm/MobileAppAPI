@@ -16,6 +16,9 @@ using MobileAppAPI.BLL;
 using MobileAppAPI.DAL;
 using MobileAppAPI.BLL.Interfaces;
 using MobileAppAPI.BLL.Providers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace MobileAppAPI
 {
@@ -62,9 +65,21 @@ namespace MobileAppAPI
             app.UseHttpsRedirection();
             app.UseCors();
             app.UseRouting();
-
+            app.UseStaticFiles();
             app.UseAuthorization();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\assets\images")),
+                RequestPath = new PathString("/images")
+            });
 
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\assets\images")),
+                RequestPath = new PathString("/images")
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
