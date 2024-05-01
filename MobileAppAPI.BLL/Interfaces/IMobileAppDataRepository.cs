@@ -28,7 +28,9 @@ namespace MobileAppAPI.BLL
 
         #endregion
 
-
+        #region Products
+        Task<ProductDTO> GetAllProductsByCategory(int id);
+        #endregion
 
     }
 }

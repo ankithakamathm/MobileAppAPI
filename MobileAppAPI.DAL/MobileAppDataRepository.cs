@@ -331,6 +331,57 @@ namespace MobileAppAPI.DAL
 
         #endregion
 
+        #region Products
+        public async Task<ProductDTO> GetAllProductsByCategory(int id)
+        {
+            var model = new ProductDTO();
+            try
+            {
+                using (var sqlConnection = new SqlConnection(connectionString))
+                {
+                    using (var sqlCommand = new SqlCommand("spGetAllProducts", sqlConnection))
+                    {
+                        DataTable dt = new DataTable();
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddWithValue("@CategoryId", id);
+                        var dataAdapter = new SqlDataAdapter(sqlCommand);
+
+                        dataAdapter.Fill(dt);
+                        if (dt.Rows.Count > 0)
+                        {
+                            model.ProductDetails = dt.AsEnumerable().Select(dr =>
+                            new ProductDTOInfo
+                            {
+                                Id = Convert.ToInt32(dr["Id"].ToString()),
+                                CategoryId = Convert.ToInt32(dr["CategoryId"].ToString()),
+                                Name = (dr["ProductName"] is DBNull || string.IsNullOrEmpty(dr["ProductName"].ToString())) ? "" : dr["ProductName"].ToString(),
+                                Description = (dr["Description"] is DBNull || string.IsNullOrEmpty(dr["Description"].ToString())) ? "" : dr["Description"].ToString(),
+                                Price = Convert.ToDouble(dr["Price(per Kg)"].ToString()),
+                                Available = Convert.ToBoolean(dr["Available"].ToString()),
+                                Image = (dr["Image"] is DBNull || string.IsNullOrEmpty(dr["Image"].ToString())) ? "" : dr["Image"].ToString(),
+
+                            }).ToList();
+                            model.IsSuccess = true;
+                            model.Message = "info-fetch-getallproducts-success";
+                        }
+                        else
+                        {
+                            model.IsSuccess = true;
+                            model.Message = "nodata";
+                        }
+                    }
+                }
+                return model;
+            }
+            catch (Exception ex)
+            {
+                //Handle exception
+                model.IsSuccess = false;
+                model.Message = "error-fetch-getallproducts-failed";
+                return model;
+            }
+        }
+        #endregion
 
 
     }
