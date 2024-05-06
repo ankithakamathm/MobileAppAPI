@@ -359,6 +359,8 @@ namespace MobileAppAPI.DAL
                                 Price = Convert.ToDouble(dr["Price(per Kg)"].ToString()),
                                 Available = Convert.ToBoolean(dr["Available"].ToString()),
                                 Image = (dr["Image"] is DBNull || string.IsNullOrEmpty(dr["Image"].ToString())) ? "" : dr["Image"].ToString(),
+                                Attribute=(dr["Attribute"] is DBNull || string.IsNullOrEmpty(dr["Attribute"].ToString())) ? "" : dr["Attribute"].ToString(),
+                                Currency = (dr["Currency"] is DBNull || string.IsNullOrEmpty(dr["Currency"].ToString())) ? "" : dr["Currency"].ToString(),
 
                             }).ToList();
                             model.IsSuccess = true;
