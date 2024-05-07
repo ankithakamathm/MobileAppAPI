@@ -50,7 +50,7 @@ namespace MobileAppAPI.Controllers
             }
             catch (Exception e)
             {
-                return new OkObjectResult(new { MessageKey = e.Message });
+                return new InternalServerErrorObjectResult(new { MessageKey = e.Message });
             }
         }
         
