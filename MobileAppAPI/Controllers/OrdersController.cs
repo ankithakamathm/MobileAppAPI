@@ -30,6 +30,7 @@ namespace MobileAppAPI.Controllers
 
         
         [HttpPost]
+        [Route("SaveOrder")]
         public async Task<ActionResult> SaveOrderByUser([FromBody] OrderDTO order)
         {
 
