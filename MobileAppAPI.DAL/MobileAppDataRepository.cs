@@ -98,7 +98,7 @@ namespace MobileAppAPI.DAL
                         {
                             success = true;
                         }
-                        sqlConnection.Open();
+                      //  sqlConnection.Close();
                     }
                     catch (Exception ex)
                     {
@@ -385,6 +385,61 @@ namespace MobileAppAPI.DAL
         }
         #endregion
 
+        #region Orders
+        public async Task<OrderDTO> SaveOrderByUser(OrderDTO order, DataTable dtOrders)
+        {
+            var model = new OrderDTO();
+            try
+            {
+                using (var sqlConnection = new SqlConnection(connectionString))
+                {
+                    using (var sqlCommand = new SqlCommand("spSaveOrderByUser", sqlConnection))
+                    {
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddWithValue("@Name", order.OrderDetails.UserName);
 
+
+                        sqlCommand.Parameters.AddWithValue("@Email", order.OrderDetails.Email);
+                        
+                        sqlCommand.Parameters.AddWithValue("@PhoneNumber", order.OrderDetails.Mobile);
+                        sqlCommand.Parameters.AddWithValue("@City", order.OrderDetails.City);
+                        sqlCommand.Parameters.AddWithValue("@Address", order.OrderDetails.Address);
+                        sqlCommand.Parameters.AddWithValue("@State", order.OrderDetails.State);
+                        sqlCommand.Parameters.AddWithValue("@ZipCode", order.OrderDetails.zip_code);
+                        sqlCommand.Parameters.AddWithValue("@OrderItems", dtOrders);
+                        DataTable dt = new DataTable();
+
+                        sqlCommand.ExecuteNonQuery();
+                        if (Convert.ToInt32(sqlCommand.Parameters["@OutPut"].Value) > 0)
+                        {
+                            model.IsSuccess = true;
+                            model.Message = "info-fetch-getallusers-success";
+                        }
+                        else
+                        {
+                            model.IsSuccess = true;
+                            model.Message = "nodata";
+                        }
+                    }
+                }
+                return model;
+            }
+            catch (Exception ex)
+            {
+                //Handle exception
+                model.IsSuccess = false;
+                model.Message = "error-fetch-getallusers-failed";
+                return model;
+            }
+
+
+        }
+        //Task<OrderDTO> GetAllOrders()
+        //{
+
+
+        //}
+        #endregion
     }
 }
+

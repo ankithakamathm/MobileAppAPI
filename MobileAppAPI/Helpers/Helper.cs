@@ -1,4 +1,5 @@
 ﻿using MobileAppAPI.BLL;
+using MobileAppAPI.BLL.DTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -173,7 +174,30 @@ namespace MobileAppAPI.WebApi.Helpers
                 }
             }
         }
+        public static DataTable CreateDataTableFroOrderItems(List<OrderItems> orderItems)
+        {
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("ItemName", typeof(long));
+            dataTable.Columns.Add("ItemQuantity", typeof(long));
+            dataTable.Columns.Add("SubTotal", typeof(bool));
+            dataTable.Columns.Add("Price", typeof(bool));
+            dataTable.Columns.Add("Currency", typeof(bool));
 
-       
+            var dataRows = orderItems.Select(item => new object[]
+            {
+            item.itemName,
+            item.itemQuantity,
+            item.subTotal,
+            item.price,
+            item.currency
+            });
+
+            foreach (var dataRow in dataRows)
+            {
+                dataTable.Rows.Add(dataRow);
+            }
+            return dataTable;
+        }
+
     }
 }

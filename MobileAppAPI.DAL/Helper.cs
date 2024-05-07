@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MobileAppAPI.BLL.DTO;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -107,5 +108,7 @@ namespace MobileAppAPI.DAL
                     throw new ArgumentException("Unknown date format");
             }
         }
+
+       
     }
 }
