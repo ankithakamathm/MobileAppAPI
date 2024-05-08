@@ -396,6 +396,7 @@ namespace MobileAppAPI.DAL
                     using (var sqlCommand = new SqlCommand("spSaveOrderByUser", sqlConnection))
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddWithValue("@Id", order.OrderDetails.Id);
                         sqlCommand.Parameters.AddWithValue("@Name", order.OrderDetails.UserName);
 
 
