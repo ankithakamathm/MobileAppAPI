@@ -414,7 +414,7 @@ namespace MobileAppAPI.DAL
                         if (Convert.ToInt32(sqlCommand.Parameters["@OutPut"].Value) > 0)
                         {
                             model.IsSuccess = true;
-                            model.Message = "info-fetch-getallusers-success";
+                            model.Message = "info-fetch-saveorderbyuser-success";
                         }
                         else
                         {
@@ -429,7 +429,8 @@ namespace MobileAppAPI.DAL
             {
                 //Handle exception
                 model.IsSuccess = false;
-                model.Message = "error-fetch-getallusers-failed";
+                //model.Message = "error-fetch-saveorderbyuser-failed";
+                model.Message = ex.Message;
                 return model;
             }
 
