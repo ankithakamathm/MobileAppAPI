@@ -94,10 +94,8 @@ namespace MobileAppAPI.DAL
                         sqlCommand.Parameters.Add("@OutPut", SqlDbType.Int).Direction = ParameterDirection.Output;
                         sqlConnection.Open();
                         sqlCommand.ExecuteNonQuery();
-                        if (Convert.ToInt32(sqlCommand.Parameters["@OutPut"].Value) > 0)
-                        {
-                            success = true;
-                        }
+                        success = true;
+                        
                       //  sqlConnection.Close();
                     }
                     catch (Exception ex)
