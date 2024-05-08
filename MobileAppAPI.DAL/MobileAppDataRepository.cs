@@ -389,11 +389,12 @@ namespace MobileAppAPI.DAL
         public async Task<OrderDTO> SaveOrderByUser(OrderDTO order, DataTable dtOrders)
         {
             var model = new OrderDTO();
-            try
-            {
+           
                 using (var sqlConnection = new SqlConnection(connectionString))
                 {
                     using (var sqlCommand = new SqlCommand("spSaveOrderByUser", sqlConnection))
+                    {
+                    try
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
                         sqlCommand.Parameters.AddWithValue("@Id", order.OrderDetails.Id);
@@ -409,8 +410,9 @@ namespace MobileAppAPI.DAL
                         sqlCommand.Parameters.AddWithValue("@ZipCode", order.OrderDetails.zip_code);
                         sqlCommand.Parameters.AddWithValue("@OrderItems", dtOrders);
                         DataTable dt = new DataTable();
-
+                        sqlConnection.Open();
                         sqlCommand.ExecuteNonQuery();
+
                         if (Convert.ToInt32(sqlCommand.Parameters["@OutPut"].Value) > 0)
                         {
                             model.IsSuccess = true;
@@ -421,18 +423,27 @@ namespace MobileAppAPI.DAL
                             model.IsSuccess = true;
                             model.Message = "nodata";
                         }
+                       
+                        return model;
+                    }
+
+                    catch (Exception ex)
+                    {
+                        //Handle exception
+                        model.IsSuccess = false;
+                        //model.Message = "error-fetch-saveorderbyuser-failed";
+                        model.Message = ex.Message;
+                        return model;
+                    }
+                    finally
+                    {
+                        sqlConnection.Close();
                     }
                 }
-                return model;
+                
             }
-            catch (Exception ex)
-            {
-                //Handle exception
-                model.IsSuccess = false;
-                //model.Message = "error-fetch-saveorderbyuser-failed";
-                model.Message = ex.Message;
-                return model;
-            }
+           
+
 
 
         }
