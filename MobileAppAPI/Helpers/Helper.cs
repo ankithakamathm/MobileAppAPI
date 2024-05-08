@@ -177,11 +177,11 @@ namespace MobileAppAPI.WebApi.Helpers
         public static DataTable CreateDataTableFroOrderItems(List<OrderItems> orderItems)
         {
             DataTable dataTable = new DataTable();
-            dataTable.Columns.Add("ItemName", typeof(long));
-            dataTable.Columns.Add("ItemQuantity", typeof(long));
-            dataTable.Columns.Add("SubTotal", typeof(bool));
-            dataTable.Columns.Add("Price", typeof(bool));
-            dataTable.Columns.Add("Currency", typeof(bool));
+            dataTable.Columns.Add("ItemName", typeof(string));
+            dataTable.Columns.Add("ItemQuantity", typeof(int));
+            dataTable.Columns.Add("SubTotal", typeof(double));
+            dataTable.Columns.Add("Price", typeof(double));
+            dataTable.Columns.Add("Currency", typeof(string));
 
             var dataRows = orderItems.Select(item => new object[]
             {
