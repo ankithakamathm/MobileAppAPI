@@ -411,16 +411,9 @@ namespace MobileAppAPI.DAL
                         sqlConnection.Open();
                         sqlCommand.ExecuteNonQuery();
 
-                        if (Convert.ToInt32(sqlCommand.Parameters["@OutPut"].Value) > 0)
-                        {
                             model.IsSuccess = true;
                             model.Message = "info-fetch-saveorderbyuser-success";
-                        }
-                        else
-                        {
-                            model.IsSuccess = true;
-                            model.Message = "nodata";
-                        }
+                        
                        
                         return model;
                     }
