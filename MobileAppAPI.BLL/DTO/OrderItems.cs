@@ -3,12 +3,12 @@
     public class OrderItems
     {
         public string itemName { get; set; }
-        public string itemQuantity { get; set; }
+        public int itemQuantity { get; set; }
 
         public string currency { get; set; }
 
-        public string price { get; set; }
-        public string subTotal { get; set; }
+        public double price { get; set; }
+        public double subTotal { get; set; }
 
 
     }
