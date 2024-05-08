@@ -179,17 +179,21 @@ namespace MobileAppAPI.WebApi.Helpers
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add("ItemName", typeof(string));
             dataTable.Columns.Add("ItemQuantity", typeof(int));
-            dataTable.Columns.Add("SubTotal", typeof(double));
-            dataTable.Columns.Add("Price", typeof(double));
             dataTable.Columns.Add("Currency", typeof(string));
+            
+            dataTable.Columns.Add("Price", typeof(double));
+            dataTable.Columns.Add("SubTotal", typeof(double));
+
 
             var dataRows = orderItems.Select(item => new object[]
             {
             item.itemName,
             item.itemQuantity,
-            item.subTotal,
+             item.currency,
+            
             item.price,
-            item.currency
+             item.subTotal,
+
             });
 
             foreach (var dataRow in dataRows)
