@@ -7,8 +7,8 @@
 
         public string currency { get; set; }
 
-        public double price { get; set; }
-        public double subTotal { get; set; }
+        public float price { get; set; }
+        public float subTotal { get; set; }
 
 
     }
