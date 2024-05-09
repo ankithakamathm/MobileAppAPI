@@ -191,8 +191,8 @@ namespace MobileAppAPI.WebApi.Helpers
             item.itemQuantity,
              item.currency,
             
-            item.price,
-             item.subTotal,
+            item.itemPrice,
+             item.itemTotal,
 
             });
 

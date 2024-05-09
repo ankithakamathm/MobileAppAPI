@@ -7,8 +7,8 @@
 
         public string currency { get; set; }
 
-        public decimal price { get; set; }
-        public decimal subTotal { get; set; }
+        public decimal itemPrice { get; set; }
+        public decimal itemTotal { get; set; }
 
 
     }
