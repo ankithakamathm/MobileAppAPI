@@ -181,8 +181,8 @@ namespace MobileAppAPI.WebApi.Helpers
             dataTable.Columns.Add("ItemQuantity", typeof(int));
             dataTable.Columns.Add("Currency", typeof(string));
             
-            dataTable.Columns.Add("Price", typeof(float));
-            dataTable.Columns.Add("SubTotal", typeof(float));
+            dataTable.Columns.Add("Price", typeof(decimal));
+            dataTable.Columns.Add("SubTotal", typeof(decimal));
 
 
             var dataRows = orderItems.Select(item => new object[]
