@@ -28,6 +28,11 @@ namespace MobileAppAPI.BLL
 
         #endregion
 
+        #region SubCategory
+        Task<SubCategoryDTO> GetAllSubCategories();
+
+        #endregion
+
         #region Products
         Task<ProductDTO> GetAllProductsByCategory(int id);
 

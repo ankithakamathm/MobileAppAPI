@@ -329,6 +329,58 @@ namespace MobileAppAPI.DAL
 
         #endregion
 
+
+        #region subcategory
+        public async Task<SubCategoryDTO> GetAllSubCategories()
+        {
+            var model = new SubCategoryDTO();
+            try
+            {
+                using (var sqlConnection = new SqlConnection(connectionString))
+                {
+                    using (var sqlCommand = new SqlCommand("spGetAllSubCategories", sqlConnection))
+                    {
+                        DataTable dt = new DataTable();
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                        var dataAdapter = new SqlDataAdapter(sqlCommand);
+
+                        dataAdapter.Fill(dt);
+                        if (dt.Rows.Count > 0)
+                        {
+                            model.SubCategoryDetails = dt.AsEnumerable().Select(dr =>
+                            new SubCategoryInfo
+                            {
+                                Id = Convert.ToInt32(dr["Id"].ToString()),
+                                Name = (dr["Name"] is DBNull || string.IsNullOrEmpty(dr["Name"].ToString())) ? "" : dr["Name"].ToString(),
+                                CategoryId= Convert.ToInt32(dr["CategoryId"].ToString()),
+                                Active = Convert.ToBoolean(dr["Active"].ToString()),
+                                Image = (dr["Image"] is DBNull || string.IsNullOrEmpty(dr["Image"].ToString())) ? "" : dr["Image"].ToString(),
+
+                            }).ToList();
+                            model.IsSuccess = true;
+                            model.Message = "info-fetch-getallsubcategories-success";
+                        }
+                        else
+                        {
+                            model.IsSuccess = true;
+                            model.Message = "nodata";
+                        }
+                    }
+                }
+                return model;
+            }
+            catch (Exception ex)
+            {
+                //Handle exception
+                model.IsSuccess = false;
+                model.Message = "error-fetch-getallsubcategories-failed";
+                return model;
+            }
+        }
+
+        #endregion
+
         #region Products
         public async Task<ProductDTO> GetAllProductsByCategory(int id)
         {
@@ -352,6 +404,7 @@ namespace MobileAppAPI.DAL
                             {
                                 Id = Convert.ToInt32(dr["Id"].ToString()),
                                 CategoryId = Convert.ToInt32(dr["CategoryId"].ToString()),
+                                SubCategoryId = Convert.ToInt32(dr["SubCategoryId"].ToString()),
                                 Name = (dr["ProductName"] is DBNull || string.IsNullOrEmpty(dr["ProductName"].ToString())) ? "" : dr["ProductName"].ToString(),
                                 Description = (dr["Description"] is DBNull || string.IsNullOrEmpty(dr["Description"].ToString())) ? "" : dr["Description"].ToString(),
                                 Price = Convert.ToDouble(dr["Price(per Kg)"].ToString()),

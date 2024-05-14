@@ -19,6 +19,7 @@ namespace MobileAppAPI.BLL.DTO
         public int Id { get; set; }
 
         public int CategoryId { get; set; }
+        public int SubCategoryId { get; set; }
         public string Name { get; set; }
          public bool Available { get; set; }
         public double Price { get; set; }
