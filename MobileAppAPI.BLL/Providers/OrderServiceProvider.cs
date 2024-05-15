@@ -27,5 +27,11 @@ namespace MobileAppAPI.BLL.Providers
             return repository.SaveOrderByUser(order, dtOrders);
         }
 
+        public Task<OrderDTO> GetAllOrdersById(int userId)
+        {
+            return repository.GetAllOrdersById(userId);
+        }
+
+
     }
 }

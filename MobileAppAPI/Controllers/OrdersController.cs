@@ -53,9 +53,31 @@ namespace MobileAppAPI.Controllers
                 return new InternalServerErrorObjectResult(new { MessageKey = e.Message });
             }
         }
-        
 
-        
+        [HttpGet]
+        [Route("OrderDetailsById")]
+        public async Task<ActionResult> GetOrderDetails(int userId)
+        {
+
+
+            try
+            {
+                var responseDTO = await _orderService.GetAllOrdersById(userId);
+                if (responseDTO.IsSuccess)
+                {
+                    return new OkObjectResult(new { MessageKey = "success", Result = new { Orders = responseDTO.OrderDetails } });
+                }
+                else
+                {
+                    return new InternalServerErrorObjectResult(new { MessageKey = responseDTO.Message });
+                }
+            }
+            catch (Exception e)
+            {
+                return new OkObjectResult(new { MessageKey = e.Message });
+            }
+        }
+
 
     }
 }

@@ -491,6 +491,74 @@ namespace MobileAppAPI.DAL
 
 
         }
+        public async Task<OrderDTO> GetAllOrdersById(int userId)
+        {
+            var model = new OrderDTO();
+
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                using (var sqlCommand = new SqlCommand("spAllOrdersForUser", sqlConnection))
+                {
+                    try
+                    {
+
+                        DataTable dt = new DataTable();
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddWithValue("@Id", userId);
+                        var dataAdapter = new SqlDataAdapter(sqlCommand);
+
+                        dataAdapter.Fill(dt);
+                        if (dt.Rows.Count > 0)
+                        {
+                            model.OrderDetails.Id = userId;
+                            model.OrderDetails.OrderItems = dt.AsEnumerable().Select(dr =>
+                            new OrderItems
+                            {
+                                OrderId= Convert.ToInt32(dr["OrderId"]),
+                                itemName =dr["ItemName"].ToString(), 
+                                itemQuantity=Convert.ToInt32(dr["Quantity"]),
+                                itemPrice= Convert.ToDecimal(dr["Price"]),
+                                itemTotal= Convert.ToDecimal(dr["SubTotal"]),
+                                currency = dr["Currency"].ToString(),
+                                
+
+                            }).ToList();
+                            model.IsSuccess = true;
+                            model.Message = "info-fetch-getallcategories-success";
+                        }
+                        else
+                        {
+                            model.IsSuccess = true;
+                            model.Message = "nodata";
+                        }
+
+                        model.IsSuccess = true;
+                        model.Message = "info-fetch-saveorderbyuser-success";
+
+
+                        return model;
+                    }
+
+                    catch (Exception ex)
+                    {
+                        //Handle exception
+                        model.IsSuccess = false;
+                        //model.Message = "error-fetch-saveorderbyuser-failed";
+                        model.Message = ex.Message;
+                        return model;
+                    }
+                    finally
+                    {
+                        sqlConnection.Close();
+                    }
+                }
+
+            }
+
+
+
+
+        }
         //Task<OrderDTO> GetAllOrders()
         //{
 

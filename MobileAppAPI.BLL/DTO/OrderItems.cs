@@ -2,6 +2,7 @@
 {
     public class OrderItems
     {
+        public int OrderId { get; set; }
         public string itemName { get; set; }
         public int itemQuantity { get; set; }
 

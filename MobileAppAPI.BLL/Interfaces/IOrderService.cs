@@ -9,6 +9,7 @@ namespace MobileAppAPI.BLL.Interfaces
 {
     public interface IOrderService
     {
+        Task<OrderDTO> GetAllOrdersById(int userId);
 
         // Task<OrderDTO> GetAllOrders();
 

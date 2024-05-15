@@ -40,6 +40,7 @@ namespace MobileAppAPI.BLL
 
         #region Orders
         Task<OrderDTO> SaveOrderByUser(OrderDTO order, DataTable dtOrders);
+        Task<OrderDTO> GetAllOrdersById(int userId);
        // Task<OrderDTO> GetAllOrders();
         #endregion
 
