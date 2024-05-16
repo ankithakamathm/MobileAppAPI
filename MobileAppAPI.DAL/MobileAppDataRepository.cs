@@ -530,7 +530,7 @@ namespace MobileAppAPI.DAL
                                     Status = row["OrderStatus"].ToString(),
                                     OrderedDate = Convert.ToDateTime(row["OrderDate"]),
                                     zip_code= row["ZipCode"].ToString(),
-                                    TotalPrice= row["TotalPrice"] == null ? 0:Convert.ToDecimal(row["TotalPrice"])
+                                    TotalPrice= row["TotalPrice"] == DBNull.Value ? 0:Convert.ToDecimal(row["TotalPrice"])
                                 };
                                 //DataView dv = new DataView(ds.Tables[1]);
                                 //dv.RowFilter = "Id == Convert.ToInt32(row[\"OrderId\"])";
