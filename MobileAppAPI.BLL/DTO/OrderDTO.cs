@@ -29,6 +29,7 @@ namespace MobileAppAPI.BLL.DTO
         public DateTime? DeliveredDate { get; set; }
         public List<OrderItems> OrderItems { get; set; }
         public bool Active { get; set; }
+        public decimal TotalPrice {  get; set; }
         public string Image { get; set; }
     }
 }

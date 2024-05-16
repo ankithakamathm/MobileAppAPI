@@ -459,6 +459,7 @@ namespace MobileAppAPI.DAL
                         sqlCommand.Parameters.AddWithValue("@Address", order.OrderDetails.Address);
                         sqlCommand.Parameters.AddWithValue("@State", order.OrderDetails.State);
                         sqlCommand.Parameters.AddWithValue("@ZipCode", order.OrderDetails.zip_code);
+                        sqlCommand.Parameters.AddWithValue("@TotalPrice", order.OrderDetails.TotalPrice);
                         sqlCommand.Parameters.AddWithValue("@OrderItems", dtOrders);
                         DataTable dt = new DataTable();
                         sqlConnection.Open();
@@ -529,6 +530,7 @@ namespace MobileAppAPI.DAL
                                     Status = row["OrderStatus"].ToString(),
                                     OrderedDate = Convert.ToDateTime(row["OrderDate"]),
                                     zip_code= row["ZipCode"].ToString(),
+                                    TotalPrice= Convert.ToDecimal(row["TotalPrice"])
                                 };
                                 //DataView dv = new DataView(ds.Tables[1]);
                                 //dv.RowFilter = "Id == Convert.ToInt32(row[\"OrderId\"])";
