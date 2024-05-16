@@ -536,7 +536,7 @@ namespace MobileAppAPI.DAL
                                 //dv.RowFilter = "Id == Convert.ToInt32(row[\"OrderId\"])";
                                 dt = ds.Tables[1];
 
-                                model.OrderDetails.OrderItems = dt.AsEnumerable().Where(row=>row.Field<int>("Id") == Convert.ToInt32(row["OrderId"])).Select(dr =>
+                                model.OrderDetails.OrderItems = dt.AsEnumerable().Where(x=>x.Field<int>("OrderId") == Convert.ToInt32(row["Id"])).Select(dr =>
                                 new OrderItems
                                 {
                                     OrderItemId = Convert.ToInt32(dr["OrderId"]),
