@@ -24,11 +24,10 @@ namespace MobileAppAPI.BLL.DTO
         public string Address { get; set; }
         public string State { get; set; }
         public string zip_code { get; set; }
-
+        public string Status { get; set; }
+        public DateTime? OrderedDate { get; set; }
+        public DateTime? DeliveredDate { get; set; }
         public List<OrderItems> OrderItems { get; set; }
-
-
-
         public bool Active { get; set; }
         public string Image { get; set; }
     }

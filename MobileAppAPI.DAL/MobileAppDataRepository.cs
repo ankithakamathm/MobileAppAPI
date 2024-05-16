@@ -501,28 +501,52 @@ namespace MobileAppAPI.DAL
                 {
                     try
                     {
-
-                        DataTable dt = new DataTable();
+                        DataSet ds = new DataSet();
+                        
                         sqlCommand.CommandType = CommandType.StoredProcedure;
                         sqlCommand.Parameters.AddWithValue("@Id", userId);
                         var dataAdapter = new SqlDataAdapter(sqlCommand);
 
-                        dataAdapter.Fill(dt);
-                        if (dt.Rows.Count > 0)
+                        dataAdapter.Fill(ds);
+                        if (ds.Tables[0].Rows.Count > 0)
                         {
-                            model.OrderDetails.Id = userId;
-                            model.OrderDetails.OrderItems = dt.AsEnumerable().Select(dr =>
-                            new OrderItems
-                            {
-                                OrderId= Convert.ToInt32(dr["OrderId"]),
-                                itemName =dr["ItemName"].ToString(), 
-                                itemQuantity=Convert.ToInt32(dr["Quantity"]),
-                                itemPrice= Convert.ToDecimal(dr["Price"]),
-                                itemTotal= Convert.ToDecimal(dr["SubTotal"]),
-                                currency = dr["Currency"].ToString(),
-                                
+                            DataTable dt = new DataTable();
 
-                            }).ToList();
+                            dt = ds.Tables[0];
+                            foreach (DataRow row in dt.Rows)
+                            {
+
+                                model.OrderDetails = 
+                                new OrderInfo
+                                {
+                                    Id = Convert.ToInt32(row["Id"]),
+                                    UserName = row["Name"].ToString(),
+                                    Email = row["Email"].ToString(),
+                                    Mobile = row["PhoneNumber"].ToString(),
+                                    City = row["City"].ToString(),
+                                    Address = row["Address"].ToString(),
+                                    State = row["State"].ToString(),
+                                    Status = row["OrderStatus"].ToString(),
+                                    OrderedDate = Convert.ToDateTime(row["OrderDate"]),
+                                    zip_code= row["ZipCode"].ToString(),
+                                };
+                                //DataView dv = new DataView(ds.Tables[1]);
+                                //dv.RowFilter = "Id == Convert.ToInt32(row[\"OrderId\"])";
+                                dt = ds.Tables[1];
+
+                                model.OrderDetails.OrderItems = dt.AsEnumerable().Where(row=>row.Field<int>("Id") == Convert.ToInt32(row["OrderId"])).Select(dr =>
+                                new OrderItems
+                                {
+                                    OrderItemId = Convert.ToInt32(dr["OrderId"]),
+                                    ItemName = dr["ItemName"].ToString(),
+                                    ItemQuantity = Convert.ToInt32(dr["Quantity"]),
+                                    ItemPrice = Convert.ToDecimal(dr["Price"]),
+                                    ItemTotal = Convert.ToDecimal(dr["SubTotal"]),
+                                    Currency = dr["Currency"].ToString(),
+                                    
+
+                                }).ToList();
+                            }
                             model.IsSuccess = true;
                             model.Message = "info-fetch-getallcategories-success";
                         }

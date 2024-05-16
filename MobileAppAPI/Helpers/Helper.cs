@@ -187,12 +187,12 @@ namespace MobileAppAPI.WebApi.Helpers
 
             var dataRows = orderItems.Select(item => new object[]
             {
-            item.itemName,
-            item.itemQuantity,
-             item.currency,
+            item.ItemName,
+            item.ItemQuantity,
+             item.Currency,
             
-            item.itemPrice,
-             item.itemTotal,
+            item.ItemPrice,
+             item.ItemTotal,
 
             });
 

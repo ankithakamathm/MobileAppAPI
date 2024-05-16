@@ -1,15 +1,19 @@
-﻿namespace MobileAppAPI.BLL.DTO
+﻿using System;
+
+namespace MobileAppAPI.BLL.DTO
 {
     public class OrderItems
     {
-        public int OrderId { get; set; }
-        public string itemName { get; set; }
-        public int itemQuantity { get; set; }
+        public int OrderItemId { get; set; }
+        public string ItemName { get; set; }
+        public int ItemQuantity { get; set; }
 
-        public string currency { get; set; }
+        public string Currency { get; set; }
 
-        public decimal itemPrice { get; set; }
-        public decimal itemTotal { get; set; }
+        public decimal ItemPrice { get; set; }
+        public decimal ItemTotal { get; set; }
+
+      
 
 
     }
