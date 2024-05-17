@@ -517,25 +517,25 @@ namespace MobileAppAPI.DAL
                             foreach (DataRow row in dt.Rows)
                             {
 
-                                model.OrderDetails = 
-                                new OrderInfo
-                                {
-                                    Id = Convert.ToInt32(row["Id"]),
-                                    UserName = row["Name"].ToString(),
-                                    Email = row["Email"].ToString(),
-                                    Mobile = row["PhoneNumber"].ToString(),
-                                    City = row["City"].ToString(),
-                                    Address = row["Address"].ToString(),
-                                    State = row["State"].ToString(),
-                                    Status = row["OrderStatus"].ToString(),
-                                    OrderedDate = Convert.ToDateTime(row["OrderDate"]),
-                                    zip_code= row["ZipCode"].ToString(),
-                                    TotalPrice= row["TotalPrice"] == DBNull.Value ? 0:Convert.ToDecimal(row["TotalPrice"])
-                                };
+                                //model.OrderDetails = 
+                                //new OrderInfo
+                                //{
+                                //    Id = Convert.ToInt32(row["Id"]),
+                                //    UserName = row["Name"].ToString(),
+                                //    Email = row["Email"].ToString(),
+                                //    Mobile = row["PhoneNumber"].ToString(),
+                                //    City = row["City"].ToString(),
+                                //    Address = row["Address"].ToString(),
+                                //    State = row["State"].ToString(),
+                                //    Status = row["OrderStatus"].ToString(),
+                                //    OrderedDate = Convert.ToDateTime(row["OrderDate"]),
+                                //    zip_code= row["ZipCode"].ToString(),
+                                //    TotalPrice= row["TotalPrice"] == DBNull.Value ? 0:Convert.ToDecimal(row["TotalPrice"])
+                                //};
                                 //DataView dv = new DataView(ds.Tables[1]);
                                 //dv.RowFilter = "Id == Convert.ToInt32(row[\"OrderId\"])";
                                 dt = ds.Tables[1];
-
+                                model.OrderDetails.Id = userId;
                                 model.OrderDetails.OrderItems = dt.AsEnumerable().Where(x=>x.Field<int>("OrderId") == Convert.ToInt32(row["Id"])).Select(dr =>
                                 new OrderItems
                                 {
