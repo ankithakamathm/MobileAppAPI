@@ -129,7 +129,7 @@ namespace MobileAppAPI.DAL
                         sqlCommand.Parameters.AddWithValue("@UserId", address.AddAddress.UserId);
                         
                         sqlCommand.Parameters.AddWithValue("@Pincode", address.AddAddress.Pincode);
-                        sqlCommand.Parameters.Add("@OutPut", SqlDbType.Int).Direction = ParameterDirection.Output;
+                        
                         sqlConnection.Open();
                         sqlCommand.ExecuteNonQuery();
                         
