@@ -144,7 +144,7 @@ namespace MobileAppAPI.Controllers
                 }
                 else
                 {
-                    return new InternalServerErrorObjectResult(new { MessageKey = responseDTO.Message });
+                    return new InternalServerErrorObjectResult(new { MessageKey = address });
                 }
             }
             catch (Exception e)
