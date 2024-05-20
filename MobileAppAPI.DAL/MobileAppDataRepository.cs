@@ -122,13 +122,13 @@ namespace MobileAppAPI.DAL
                     try
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
-                        sqlCommand.Parameters.AddWithValue("@Address", address.UserAddress.UserAddress);
-                        sqlCommand.Parameters.AddWithValue("@City", address.UserAddress.City);
-                        sqlCommand.Parameters.AddWithValue("@State", address.UserAddress.State);
-                        sqlCommand.Parameters.AddWithValue("@Email", address.UserAddress.Email);
-                        sqlCommand.Parameters.AddWithValue("@UserId", address.UserAddress.UserId);
+                        sqlCommand.Parameters.AddWithValue("@Address", address.AddAddress.UserAddress);
+                        sqlCommand.Parameters.AddWithValue("@City", address.AddAddress.City);
+                        sqlCommand.Parameters.AddWithValue("@State", address.AddAddress.State);
+                        sqlCommand.Parameters.AddWithValue("@Email", address.AddAddress.Email);
+                        sqlCommand.Parameters.AddWithValue("@UserId", address.AddAddress.UserId);
                         
-                        sqlCommand.Parameters.AddWithValue("@Pincode", address.UserAddress.Pincode);
+                        sqlCommand.Parameters.AddWithValue("@Pincode", address.AddAddress.Pincode);
                         sqlCommand.Parameters.Add("@OutPut", SqlDbType.Int).Direction = ParameterDirection.Output;
                         sqlConnection.Open();
                         sqlCommand.ExecuteNonQuery();
