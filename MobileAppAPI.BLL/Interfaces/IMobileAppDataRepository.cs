@@ -15,6 +15,7 @@ namespace MobileAppAPI.BLL
         
         Task<UserDetailsDTO> GetAllUsers();
         Task<Boolean> UpdatePassword(UserPersonalDetails details);
+        Task<AddressDTO> AddAddress(AddressDTO address);
         Task<UserDTO> CheckLogin(string userName);
 
         Task<string> GetPassword(string userName);

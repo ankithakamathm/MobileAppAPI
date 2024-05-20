@@ -12,6 +12,8 @@ using MobileAppAPI.DAL;
 using MobileAppAPI.BLL.Interfaces;
 using MobileAppAPI.WebApi.Helpers;
 using Helper = MobileAppAPI.WebApi.Helpers.Helper;
+using MobileAppAPI.BLL;
+using System.Data;
 
 namespace MobileAppAPI.Controllers
 {
@@ -120,6 +122,32 @@ namespace MobileAppAPI.Controllers
             
 
 
+            }
+            catch (Exception e)
+            {
+                return new InternalServerErrorObjectResult(new { MessageKey = e.Message });
+            }
+        }
+
+
+        [HttpPost]
+        [Route("AddAddress")]
+        public async Task<ActionResult> AddAddress(AddressDTO address)
+        {
+
+
+            try
+            {
+
+                var responseDTO = await _accountService.AddAddress(address);
+                if (responseDTO.IsSuccess)
+                {
+                    return new OkObjectResult(new { MessageKey = "success" });
+                }
+                else
+                {
+                    return new InternalServerErrorObjectResult(new { MessageKey = responseDTO.Message });
+                }
             }
             catch (Exception e)
             {

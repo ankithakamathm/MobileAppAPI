@@ -111,6 +111,50 @@ namespace MobileAppAPI.DAL
             }
         }
 
+
+        public async Task<AddressDTO> AddAddress(AddressDTO address)
+        {
+            var model = new AddressDTO();
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                using (var sqlCommand = new SqlCommand("spUserAddAddress", sqlConnection))
+                {
+                    try
+                    {
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddWithValue("@Address", address.UserAddress.UserAddress);
+                        sqlCommand.Parameters.AddWithValue("@City", address.UserAddress.City);
+                        sqlCommand.Parameters.AddWithValue("@State", address.UserAddress.State);
+                        sqlCommand.Parameters.AddWithValue("@UserId", address.UserAddress.UserId);
+                        
+                        sqlCommand.Parameters.AddWithValue("@Pincode", address.UserAddress.Pincode);
+                        sqlCommand.Parameters.Add("@OutPut", SqlDbType.Int).Direction = ParameterDirection.Output;
+                        sqlConnection.Open();
+                        sqlCommand.ExecuteNonQuery();
+                        
+                        model.IsSuccess = true;
+                        model.Message = "info-fetch-saveorderbyuser-success";
+
+
+                        return model;
+                        //  sqlConnection.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        model.IsSuccess = false;
+                        model.Message = "info-fetch-saveorderbyuser-failure";
+                        return model;
+                        //Handle exception
+                    }
+                    finally
+                    {
+                        sqlConnection.Close();
+                    }
+                }
+                
+            }
+        }
+
         public async Task<UserDTO> CheckLogin(string userName)
         {
             var model = new UserDTO();
