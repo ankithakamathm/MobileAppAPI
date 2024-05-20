@@ -10,12 +10,12 @@ namespace MobileAppAPI.BLL
     {
 		public AddressDTO()
         {
-			this.UserAddress = new Address();
+			this.AddAddress = new Address();
         }
 		public bool IsSuccess { get; set; }
         public string Message { get; set; }
         
-        public Address UserAddress { get; set; }
+        public Address AddAddress { get; set; }
     }
 
     public class Address
