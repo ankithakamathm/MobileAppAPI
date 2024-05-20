@@ -134,8 +134,6 @@ namespace MobileAppAPI.Controllers
         [Route("AddAddress")]
         public async Task<ActionResult> AddAddress(AddressDTO address)
         {
-
-
             try
             {
 

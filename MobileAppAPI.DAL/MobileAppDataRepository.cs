@@ -142,7 +142,7 @@ namespace MobileAppAPI.DAL
                     }
                     catch (Exception ex)
                     {
-                        model.Message = ex.Message;
+                        model.Message = ex.Message + address.AddAddress.UserAddress;
                         model.IsSuccess = false;
                         //model.Message = "info-fetch-addaddress-failure";
                         return model;
