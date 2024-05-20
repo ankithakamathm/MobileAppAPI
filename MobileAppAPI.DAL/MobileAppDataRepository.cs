@@ -125,6 +125,7 @@ namespace MobileAppAPI.DAL
                         sqlCommand.Parameters.AddWithValue("@Address", address.UserAddress.UserAddress);
                         sqlCommand.Parameters.AddWithValue("@City", address.UserAddress.City);
                         sqlCommand.Parameters.AddWithValue("@State", address.UserAddress.State);
+                        sqlCommand.Parameters.AddWithValue("@Email", address.UserAddress.Email);
                         sqlCommand.Parameters.AddWithValue("@UserId", address.UserAddress.UserId);
                         
                         sqlCommand.Parameters.AddWithValue("@Pincode", address.UserAddress.Pincode);
@@ -133,7 +134,7 @@ namespace MobileAppAPI.DAL
                         sqlCommand.ExecuteNonQuery();
                         
                         model.IsSuccess = true;
-                        model.Message = "info-fetch-saveorderbyuser-success";
+                        model.Message = "info-fetch-addaddress-success";
 
 
                         return model;
@@ -142,7 +143,7 @@ namespace MobileAppAPI.DAL
                     catch (Exception ex)
                     {
                         model.IsSuccess = false;
-                        model.Message = "info-fetch-saveorderbyuser-failure";
+                        model.Message = "info-fetch-addaddress-failure";
                         return model;
                         //Handle exception
                     }

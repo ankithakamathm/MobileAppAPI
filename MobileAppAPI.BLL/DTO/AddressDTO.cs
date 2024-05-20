@@ -23,6 +23,7 @@ namespace MobileAppAPI.BLL
         public int Id { get; set; }
         public string UserAddress { get; set; }
         public string City { get; set; }
+        public string Email { get; set; }
         public string State { get; set; }
         public string Pincode { get; set; }
         public int UserId { get; set; }
@@ -31,3 +32,4 @@ namespace MobileAppAPI.BLL
 
   
 }
+
