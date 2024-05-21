@@ -8,14 +8,15 @@ namespace MobileAppAPI.BLL
 {
     public class AddressDTO
     {
-		public AddressDTO()
+        public AddressDTO()
         {
-			this.AddAddress = new Address();
+            this.AddAddress = new Address();
         }
-		public bool IsSuccess { get; set; }
+        public bool IsSuccess { get; set; }
         public string Message { get; set; }
-        
+
         public Address AddAddress { get; set; }
+        public List<Address> ListAddress { get; set; }
     }
 
     public class Address

@@ -22,6 +22,9 @@ namespace MobileAppAPI.BLL
         Task<UserDTO> RegisterUser(string username, string encryptedPassword, string email,string phoneNumber);
 
         Task<bool> checkIfUserExistsAlready(string phoneNumber);
+
+        Task<AddressDTO> GetAddressesByUserId(int userId);
+        
         #endregion
 
         #region Category

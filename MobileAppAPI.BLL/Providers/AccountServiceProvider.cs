@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -58,7 +59,10 @@ namespace MobileAppAPI.BLL.Interfaces
             return repository.AddAddress(address);
         }
 
-        
+        public Task<AddressDTO> GetAddressesByUserId(int userId)
+        {
+            return repository.GetAddressesByUserId(userId);
+        }
     }
 
 }

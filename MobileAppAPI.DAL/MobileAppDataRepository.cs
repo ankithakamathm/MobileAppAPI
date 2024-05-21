@@ -320,7 +320,71 @@ namespace MobileAppAPI.DAL
             }
         }
 
+        public async Task<AddressDTO> GetAddressesByUserId(int userId)
+        {
+            var model = new AddressDTO();
 
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                using (var sqlCommand = new SqlCommand("spGetAllAddressesForUser", sqlConnection))
+                {
+                    try
+                    {
+                        DataSet ds = new DataSet();
+                        DataTable dt = new DataTable();
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddWithValue("@UserId", userId);
+                        var dataAdapter = new SqlDataAdapter(sqlCommand);
+
+                        dataAdapter.Fill(dt);
+                        if (dt.Rows.Count > 0)
+                        {
+                            model.ListAddress = dt.AsEnumerable().Select(dr =>
+                            new Address
+                            {
+                                Id = Convert.ToInt32(dr["Id"].ToString()),
+                                UserAddress = (dr["Address"] is DBNull || string.IsNullOrEmpty(dr["Address"].ToString())) ? "" : dr["Address"].ToString(),
+                                City = (dr["City"] is DBNull || string.IsNullOrEmpty(dr["City"].ToString())) ? "" : dr["City"].ToString(),
+                                State = (dr["State"] is DBNull || string.IsNullOrEmpty(dr["State"].ToString())) ? "" : dr["State"].ToString(),
+                                Pincode = (dr["Pincode"] is DBNull || string.IsNullOrEmpty(dr["Pincode"].ToString())) ? "" : dr["Pincode"].ToString(),
+
+                                UserId = Convert.ToInt32(dr["UserId"].ToString()),
+                                Email = (dr["Email"] is DBNull || string.IsNullOrEmpty(dr["Email"].ToString())) ? "" : dr["Email"].ToString(),
+
+                            }).ToList();
+                            model.IsSuccess = true;
+                            model.Message = "info-fetch-getaddressesbyuserid-success";
+                        }
+                        else
+                        {
+                            model.IsSuccess = true;
+                            model.Message = "nodata";
+                        }
+
+                        
+                        return model;
+                    }
+
+                    catch (Exception ex)
+                    {
+                        //Handle exception
+                        model.IsSuccess = false;
+                        //model.Message = "error-fetch-saveorderbyuser-failed";
+                        model.Message = "error-fetch-getaddressesbyuserid-failed";
+                        return model;
+                    }
+                    finally
+                    {
+                        sqlConnection.Close();
+                    }
+                }
+
+            }
+
+
+
+
+        }
 
         #endregion
 

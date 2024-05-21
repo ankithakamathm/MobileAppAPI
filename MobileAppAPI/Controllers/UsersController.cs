@@ -152,6 +152,29 @@ namespace MobileAppAPI.Controllers
                 return new InternalServerErrorObjectResult(new { MessageKey = e.Message });
             }
         }
+        [HttpGet]
+        [Route("GetAddressesByUserId")]
+        public async Task<ActionResult> GetAddressesByUserId(int userId)
+        {
+
+
+            try
+            {
+                var responseDTO = await _accountService.GetAddressesByUserId(userId);
+                if (responseDTO.IsSuccess)
+                {
+                    return new OkObjectResult(new { MessageKey = "success", Result = new { Address = responseDTO.ListAddress } });
+                }
+                else
+                {
+                    return new InternalServerErrorObjectResult(new { MessageKey = responseDTO.Message });
+                }
+            }
+            catch (Exception e)
+            {
+                return new OkObjectResult(new { MessageKey = e.Message });
+            }
+        }
 
 
 
