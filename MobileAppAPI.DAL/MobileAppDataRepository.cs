@@ -413,7 +413,7 @@ namespace MobileAppAPI.DAL
                                 Name = (dr["Name"] is DBNull || string.IsNullOrEmpty(dr["Name"].ToString())) ? "" : dr["Name"].ToString(),
                                 
                                 Active = Convert.ToBoolean(dr["Active"].ToString()),
-                                Image= (dr["Image"] is DBNull || string.IsNullOrEmpty(dr["Image"].ToString())) ? "" : dr["Image"].ToString(),
+                                Image= (dr["Image"] is DBNull || string.IsNullOrEmpty(dr["Image"].ToString())) ? null : (byte[])dr["Image"],
 
                             }).ToList();
                             model.IsSuccess = true;
@@ -465,7 +465,7 @@ namespace MobileAppAPI.DAL
                                 Name = (dr["Name"] is DBNull || string.IsNullOrEmpty(dr["Name"].ToString())) ? "" : dr["Name"].ToString(),
                                 CategoryId= Convert.ToInt32(dr["CategoryId"].ToString()),
                                 Active = Convert.ToBoolean(dr["Active"].ToString()),
-                                Image = (dr["Image"] is DBNull || string.IsNullOrEmpty(dr["Image"].ToString())) ? "" : dr["Image"].ToString(),
+                                Image = (dr["Image"] is DBNull || string.IsNullOrEmpty(dr["Image"].ToString())) ? null : (byte[])dr["Image"],
 
                             }).ToList();
                             model.IsSuccess = true;
@@ -519,7 +519,7 @@ namespace MobileAppAPI.DAL
                                 Description = (dr["Description"] is DBNull || string.IsNullOrEmpty(dr["Description"].ToString())) ? "" : dr["Description"].ToString(),
                                 Price = Convert.ToDouble(dr["Price(per Kg)"].ToString()),
                                 Available = Convert.ToBoolean(dr["Available"].ToString()),
-                                Image = (dr["Image"] is DBNull || string.IsNullOrEmpty(dr["Image"].ToString())) ? "" : dr["Image"].ToString(),
+                                Image = (dr["Image"] is DBNull || string.IsNullOrEmpty(dr["Image"].ToString())) ? null : (byte[])dr["Image"],
                                 Attribute=(dr["Attribute"] is DBNull || string.IsNullOrEmpty(dr["Attribute"].ToString())) ? "" : dr["Attribute"].ToString(),
                                 Currency = (dr["Currency"] is DBNull || string.IsNullOrEmpty(dr["Currency"].ToString())) ? "" : dr["Currency"].ToString(),
 
