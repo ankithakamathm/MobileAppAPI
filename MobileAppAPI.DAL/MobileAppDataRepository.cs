@@ -625,10 +625,11 @@ namespace MobileAppAPI.DAL
 
                             dt = ds.Tables[0];
                             
-                                model.OrderList = dt.AsEnumerable().Select(dr =>
-
-                                
-                                new OrderInfo
+                               
+                            List<OrderInfo> orders = new List<OrderInfo>();
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                OrderInfo orderInfo=new OrderInfo
                                 {
                                     Id = Convert.ToInt32(dr["Id"]),
                                     UserName = dr["Name"].ToString(),
@@ -639,26 +640,28 @@ namespace MobileAppAPI.DAL
                                     State = dr["State"].ToString(),
                                     Status = dr["OrderStatus"].ToString(),
                                     OrderedDate = Convert.ToDateTime(dr["OrderDate"]),
-                                    zip_code= dr["ZipCode"].ToString(),
-                                    TotalPrice= dr["TotalPrice"] == DBNull.Value ? 0:Convert.ToDecimal(dr["TotalPrice"])
-                                }).ToList();
+                                    zip_code = dr["ZipCode"].ToString(),
+                                    TotalPrice = dr["TotalPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(dr["TotalPrice"])
+                                };
                                 //DataView dv = new DataView(ds.Tables[1]);
                                 //dv.RowFilter = "Id == Convert.ToInt32(row[\"OrderId\"])";
-                                //dt = ds.Tables[1];
+                                dt = ds.Tables[1];
+                                
+                                orderInfo.OrderItems = dt.AsEnumerable().Where(x => x.Field<int>("OrderId") == Convert.ToInt32(dr["Id"])).Select(dataRow =>
+                                new OrderItems
+                                {
+                                    OrderItemId = Convert.ToInt32(dataRow["OrderId"]),
+                                    ItemName = dataRow["ItemName"].ToString(),
+                                    ItemQuantity = Convert.ToInt32(dataRow["Quantity"]),
+                                    ItemPrice = Convert.ToDecimal(dataRow["Price"]),
+                                    ItemTotal = Convert.ToDecimal(dataRow["SubTotal"]),
+                                    Currency = dataRow["Currency"].ToString(),
 
-                                //model.OrderDetails.OrderItems = dt.AsEnumerable().Where(x=>x.Field<int>("OrderId") == Convert.ToInt32(row["Id"])).Select(dr =>
-                                //new OrderItems
-                                //{
-                                //    OrderItemId = Convert.ToInt32(dr["OrderId"]),
-                                //    ItemName = dr["ItemName"].ToString(),
-                                //    ItemQuantity = Convert.ToInt32(dr["Quantity"]),
-                                //    ItemPrice = Convert.ToDecimal(dr["Price"]),
-                                //    ItemTotal = Convert.ToDecimal(dr["SubTotal"]),
-                                //    Currency = dr["Currency"].ToString(),
-                                    
 
-                                //}).ToList();
-                            
+                                }).ToList();
+                                orders.Add(orderInfo);
+                            }
+                            model.OrderList = orders;
                             model.IsSuccess = true;
                             model.Message = "info-fetch-getallcategories-success";
                         }
