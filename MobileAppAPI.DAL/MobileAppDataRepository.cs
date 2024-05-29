@@ -656,7 +656,8 @@ namespace MobileAppAPI.DAL
                                     ItemPrice = Convert.ToDecimal(dataRow["Price"]),
                                     ItemTotal = Convert.ToDecimal(dataRow["SubTotal"]),
                                     Currency = dataRow["Currency"].ToString(),
-
+                                    Image = (dataRow["Image"] is DBNull || string.IsNullOrEmpty(dataRow["Image"].ToString())) ? null : (byte[])dataRow["Image"],
+                                    
 
                                 }).ToList();
                                 orders.Add(orderInfo);

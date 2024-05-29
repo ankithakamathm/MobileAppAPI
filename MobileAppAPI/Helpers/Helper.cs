@@ -178,6 +178,7 @@ namespace MobileAppAPI.WebApi.Helpers
         {
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add("ItemName", typeof(string));
+            dataTable.Columns.Add("ItemId", typeof(string));
             dataTable.Columns.Add("ItemQuantity", typeof(int));
             dataTable.Columns.Add("Currency", typeof(string));
             
@@ -188,9 +189,10 @@ namespace MobileAppAPI.WebApi.Helpers
             var dataRows = orderItems.Select(item => new object[]
             {
             item.ItemName,
+             item.ItemId,
             item.ItemQuantity,
              item.Currency,
-            
+           
             item.ItemPrice,
              item.ItemTotal,
 
