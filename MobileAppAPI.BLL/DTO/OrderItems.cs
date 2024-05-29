@@ -6,7 +6,7 @@ namespace MobileAppAPI.BLL.DTO
     {
         public int OrderItemId { get; set; }
         public string ItemName { get; set; }
-        public string ItemId { get; set; }
+        public int ItemId { get; set; }
         
         public int ItemQuantity { get; set; }
 
