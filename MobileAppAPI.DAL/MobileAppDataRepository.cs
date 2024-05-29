@@ -123,11 +123,13 @@ namespace MobileAppAPI.DAL
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
                         sqlCommand.Parameters.AddWithValue("@Address", address.AddAddress.UserAddress);
+                        sqlCommand.Parameters.AddWithValue("@Name", address.AddAddress.Name);
                         sqlCommand.Parameters.AddWithValue("@City", address.AddAddress.City);
                         sqlCommand.Parameters.AddWithValue("@State", address.AddAddress.State);
                         sqlCommand.Parameters.AddWithValue("@Email", address.AddAddress.Email);
                         sqlCommand.Parameters.AddWithValue("@UserId", address.AddAddress.UserId);
-                        
+                        sqlCommand.Parameters.AddWithValue("@Phone", address.AddAddress.Phone);
+
                         sqlCommand.Parameters.AddWithValue("@Pincode", address.AddAddress.Pincode);
                         
                         sqlConnection.Open();
@@ -347,9 +349,10 @@ namespace MobileAppAPI.DAL
                                 City = (dr["City"] is DBNull || string.IsNullOrEmpty(dr["City"].ToString())) ? "" : dr["City"].ToString(),
                                 State = (dr["State"] is DBNull || string.IsNullOrEmpty(dr["State"].ToString())) ? "" : dr["State"].ToString(),
                                 Pincode = (dr["Pincode"] is DBNull || string.IsNullOrEmpty(dr["Pincode"].ToString())) ? "" : dr["Pincode"].ToString(),
-
+                                Phone = (dr["Phone"] is DBNull || string.IsNullOrEmpty(dr["Phone"].ToString())) ? "" : dr["Phone"].ToString(),
                                 UserId = Convert.ToInt32(dr["UserId"].ToString()),
                                 Email = (dr["Email"] is DBNull || string.IsNullOrEmpty(dr["Email"].ToString())) ? "" : dr["Email"].ToString(),
+                                Name = (dr["Name"] is DBNull || string.IsNullOrEmpty(dr["Name"].ToString())) ? "" : dr["Name"].ToString(),
 
                             }).ToList();
                             model.IsSuccess = true;
