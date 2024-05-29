@@ -65,7 +65,7 @@ namespace MobileAppAPI.Controllers
                 var responseDTO = await _orderService.GetAllOrdersById(userId);
                 if (responseDTO.IsSuccess)
                 {
-                    return new OkObjectResult(new { MessageKey = "success", Result = new { Orders = responseDTO.OrderDetails } });
+                    return new OkObjectResult(new { MessageKey = "success", Result = new { Orders = responseDTO.OrderList } });
                 }
                 else
                 {

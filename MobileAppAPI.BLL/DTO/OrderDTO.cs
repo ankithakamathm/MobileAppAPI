@@ -13,6 +13,7 @@ namespace MobileAppAPI.BLL.DTO
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
         public OrderInfo OrderDetails { get; set; }
+        public List<OrderInfo> OrderList { get; set; }
     }
     public class OrderInfo
     {

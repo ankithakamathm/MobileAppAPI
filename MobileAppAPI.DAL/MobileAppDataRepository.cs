@@ -624,24 +624,24 @@ namespace MobileAppAPI.DAL
                             DataTable dt = new DataTable();
 
                             dt = ds.Tables[0];
-                            foreach (DataRow row in dt.Rows)
-                            {
+                            
+                                model.OrderList = dt.AsEnumerable().Select(dr =>
 
-                                model.OrderDetails = 
+                                
                                 new OrderInfo
                                 {
-                                    Id = Convert.ToInt32(row["Id"]),
-                                    UserName = row["Name"].ToString(),
-                                    Email = row["Email"].ToString(),
-                                    Mobile = row["PhoneNumber"].ToString(),
-                                    City = row["City"].ToString(),
-                                    Address = row["Address"].ToString(),
-                                    State = row["State"].ToString(),
-                                    Status = row["OrderStatus"].ToString(),
-                                    OrderedDate = Convert.ToDateTime(row["OrderDate"]),
-                                    zip_code= row["ZipCode"].ToString(),
-                                    TotalPrice= row["TotalPrice"] == DBNull.Value ? 0:Convert.ToDecimal(row["TotalPrice"])
-                                };
+                                    Id = Convert.ToInt32(dr["Id"]),
+                                    UserName = dr["Name"].ToString(),
+                                    Email = dr["Email"].ToString(),
+                                    Mobile = dr["PhoneNumber"].ToString(),
+                                    City = dr["City"].ToString(),
+                                    Address = dr["Address"].ToString(),
+                                    State = dr["State"].ToString(),
+                                    Status = dr["OrderStatus"].ToString(),
+                                    OrderedDate = Convert.ToDateTime(dr["OrderDate"]),
+                                    zip_code= dr["ZipCode"].ToString(),
+                                    TotalPrice= dr["TotalPrice"] == DBNull.Value ? 0:Convert.ToDecimal(dr["TotalPrice"])
+                                }).ToList();
                                 //DataView dv = new DataView(ds.Tables[1]);
                                 //dv.RowFilter = "Id == Convert.ToInt32(row[\"OrderId\"])";
                                 //dt = ds.Tables[1];
@@ -658,7 +658,7 @@ namespace MobileAppAPI.DAL
                                     
 
                                 //}).ToList();
-                            }
+                            
                             model.IsSuccess = true;
                             model.Message = "info-fetch-getallcategories-success";
                         }
