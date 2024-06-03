@@ -520,12 +520,12 @@ namespace MobileAppAPI.DAL
                                 SubCategoryId = Convert.ToInt32(dr["SubCategoryId"].ToString()),
                                 Name = (dr["ProductName"] is DBNull || string.IsNullOrEmpty(dr["ProductName"].ToString())) ? "" : dr["ProductName"].ToString(),
                                 Description = (dr["Description"] is DBNull || string.IsNullOrEmpty(dr["Description"].ToString())) ? "" : dr["Description"].ToString(),
-                                Price = Convert.ToDouble(dr["Price(per Kg)"].ToString()),
+                                Price = Convert.ToDouble(dr["Price"].ToString()),
                                 Available = Convert.ToBoolean(dr["Available"].ToString()),
                                 Image = (dr["Image"] is DBNull || string.IsNullOrEmpty(dr["Image"].ToString())) ? null : (byte[])dr["Image"],
-                                Attribute=(dr["Attribute"] is DBNull || string.IsNullOrEmpty(dr["Attribute"].ToString())) ? "" : dr["Attribute"].ToString(),
+                                //Attribute=(dr["Attribute"] is DBNull || string.IsNullOrEmpty(dr["Attribute"].ToString())) ? "" : dr["Attribute"].ToString(),
                                 Currency = (dr["Currency"] is DBNull || string.IsNullOrEmpty(dr["Currency"].ToString())) ? "" : dr["Currency"].ToString(),
-
+                                QuantityAvailable= Convert.ToInt32(dr["QuantityAvailable"].ToString()),
                             }).ToList();
                             model.IsSuccess = true;
                             model.Message = "info-fetch-getallproducts-success";
@@ -544,6 +544,59 @@ namespace MobileAppAPI.DAL
                 //Handle exception
                 model.IsSuccess = false;
                 model.Message = "error-fetch-getallproducts-failed";
+                return model;
+            }
+        }
+
+        public async Task<ProductDTO> GetAllProductsMatchingSearch(string product)
+        {
+            var model = new ProductDTO();
+            try
+            {
+                using (var sqlConnection = new SqlConnection(connectionString))
+                {
+                    using (var sqlCommand = new SqlCommand("spGetAllProductsBySearch", sqlConnection))
+                    {
+                        DataTable dt = new DataTable();
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddWithValue("@ProductName", product);
+                        var dataAdapter = new SqlDataAdapter(sqlCommand);
+
+                        dataAdapter.Fill(dt);
+                        if (dt.Rows.Count > 0)
+                        {
+                            model.ProductDetails = dt.AsEnumerable().Select(dr =>
+                            new ProductDTOInfo
+                            {
+                                Id = Convert.ToInt32(dr["Id"].ToString()),
+                                CategoryId = Convert.ToInt32(dr["CategoryId"].ToString()),
+                                SubCategoryId = Convert.ToInt32(dr["SubCategoryId"].ToString()),
+                                Name = (dr["ProductName"] is DBNull || string.IsNullOrEmpty(dr["ProductName"].ToString())) ? "" : dr["ProductName"].ToString(),
+                                Description = (dr["Description"] is DBNull || string.IsNullOrEmpty(dr["Description"].ToString())) ? "" : dr["Description"].ToString(),
+                                Price = Convert.ToDouble(dr["Price"].ToString()),
+                                Available = Convert.ToBoolean(dr["Available"].ToString()),
+                                Image = (dr["Image"] is DBNull || string.IsNullOrEmpty(dr["Image"].ToString())) ? null : (byte[])dr["Image"],
+                                //Attribute = (dr["Attribute"] is DBNull || string.IsNullOrEmpty(dr["Attribute"].ToString())) ? "" : dr["Attribute"].ToString(),
+                                Currency = (dr["Currency"] is DBNull || string.IsNullOrEmpty(dr["Currency"].ToString())) ? "" : dr["Currency"].ToString(),
+                                QuantityAvailable = Convert.ToInt32(dr["QuantityAvailable"].ToString()),
+                            }).ToList();
+                            model.IsSuccess = true;
+                            model.Message = "info-fetch-getallproductsbysearch-success";
+                        }
+                        else
+                        {
+                            model.IsSuccess = true;
+                            model.Message = "nodata";
+                        }
+                    }
+                }
+                return model;
+            }
+            catch (Exception ex)
+            {
+                //Handle exception
+                //model.IsSuccess = false;
+                model.Message = "error-fetch-getallproductsbysearch-failed";
                 return model;
             }
         }

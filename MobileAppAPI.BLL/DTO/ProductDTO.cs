@@ -27,5 +27,6 @@ namespace MobileAppAPI.BLL.DTO
         public byte[] Image { get; set; }
         public string Attribute { get; set; }
         public string Currency { get; set; }
+        public int QuantityAvailable { get; set; }
     }
 }

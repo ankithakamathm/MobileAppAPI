@@ -10,6 +10,6 @@ namespace MobileAppAPI.BLL.Interfaces
     {
 
         Task<ProductDTO> GetAllProductsByCategory(int id);
-       
+        Task<ProductDTO> GetAllProductsMatchingSearch(string product);
     }
 }

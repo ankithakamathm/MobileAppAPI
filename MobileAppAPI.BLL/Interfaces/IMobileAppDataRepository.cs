@@ -39,7 +39,8 @@ namespace MobileAppAPI.BLL
 
         #region Products
         Task<ProductDTO> GetAllProductsByCategory(int id);
-
+        Task<ProductDTO> GetAllProductsMatchingSearch(string product);
+        
         #endregion
 
         #region Orders

@@ -21,5 +21,11 @@ namespace MobileAppAPI.BLL.Providers
             return repository.GetAllProductsByCategory(id);
         }
 
+        public Task<ProductDTO> GetAllProductsMatchingSearch(string product)
+        {
+            return repository.GetAllProductsMatchingSearch(product);
+
+        }
+
     }
 }

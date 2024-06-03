@@ -52,5 +52,29 @@ namespace MobileAppAPI.Controllers
                 return new OkObjectResult(new { MessageKey = e.Message });
             }
         }
+
+        [HttpGet]
+        [Route("Search")]
+        public async Task<ActionResult> Search(string product)
+        {
+
+
+            try
+            {
+                var responseDTO = await _productsService.GetAllProductsMatchingSearch(product);
+                if (responseDTO.IsSuccess)
+                {
+                    return new OkObjectResult(new { MessageKey = "success", Result = new { Products = responseDTO.ProductDetails } });
+                }
+                else
+                {
+                    return new InternalServerErrorObjectResult(new { MessageKey = responseDTO.Message });
+                }
+            }
+            catch (Exception e)
+            {
+                return new OkObjectResult(new { MessageKey = e.Message });
+            }
+        }
     }
 }
