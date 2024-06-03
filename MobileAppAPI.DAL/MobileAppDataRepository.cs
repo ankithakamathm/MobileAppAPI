@@ -547,6 +547,32 @@ namespace MobileAppAPI.DAL
                 return model;
             }
         }
+        public async Task<int> CheckIfProductAvailable(int id)
+        {
+            int count = 0;
+            try
+            {
+                using (var sqlConnection = new SqlConnection(connectionString))
+                {
+                    using (var sqlCommand = new SqlCommand("spGetAvailableCountofProducts", sqlConnection))
+                    {
+                        DataTable dt = new DataTable();
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddWithValue("@ProductId", id);
+                        sqlCommand.Connection.Open();
+                        count = Convert.ToInt32(sqlCommand.ExecuteScalar());
+                        sqlCommand.Connection.Close();
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                //Handle exception
+                count = -1;
+            }
+            return count;
+        }
 
         public async Task<ProductDTO> GetAllProductsMatchingSearch(string product)
         {

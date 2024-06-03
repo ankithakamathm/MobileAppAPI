@@ -54,6 +54,29 @@ namespace MobileAppAPI.Controllers
         }
 
         [HttpGet]
+        [Route("CheckIfProductAvailable")]
+        public async Task<ActionResult> CheckIfProductAvailable(int id)
+        {
+
+            try
+            {
+                var responseDTO = await _productsService.CheckIfProductAvailable(id);
+                if (responseDTO >=0 )
+                {
+                    return new OkObjectResult(new { MessageKey = "success", Result = responseDTO});
+                }
+                else
+                {
+                    return new InternalServerErrorObjectResult(new { MessageKey = responseDTO });
+                }
+            }
+            catch (Exception e)
+            {
+                return new OkObjectResult(new { MessageKey = e.Message });
+            }
+        }
+
+        [HttpGet]
         [Route("Search")]
         public async Task<ActionResult> Search(string product)
         {

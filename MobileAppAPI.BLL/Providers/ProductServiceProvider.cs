@@ -26,6 +26,11 @@ namespace MobileAppAPI.BLL.Providers
             return repository.GetAllProductsMatchingSearch(product);
 
         }
+        public Task<int> CheckIfProductAvailable(int id)
+        {
+            return repository.CheckIfProductAvailable(id);
+
+        }
 
     }
 }
