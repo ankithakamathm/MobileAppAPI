@@ -112,16 +112,17 @@ namespace MobileAppAPI.DAL
         }
 
 
-        public async Task<AddressDTO> AddAddress(AddressDTO address)
+        public async Task<AddressDTO> AddEditAddress(AddressDTO address)
         {
             var model = new AddressDTO();
             using (var sqlConnection = new SqlConnection(connectionString))
             {
-                using (var sqlCommand = new SqlCommand("spUserAddAddress", sqlConnection))
+                using (var sqlCommand = new SqlCommand("spUserAddEditAddress", sqlConnection))
                 {
                     try
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddWithValue("@Id", address.AddAddress.Id);
                         sqlCommand.Parameters.AddWithValue("@Address", address.AddAddress.UserAddress);
                         sqlCommand.Parameters.AddWithValue("@Name", address.AddAddress.Name);
                         sqlCommand.Parameters.AddWithValue("@City", address.AddAddress.City);
@@ -786,6 +787,62 @@ namespace MobileAppAPI.DAL
 
 
         //}
+        #endregion
+
+        #region Theme
+        public async Task<ThemesDTO> GetThemeById(int id)
+        {
+
+            ThemesDTO model = new ThemesDTO();
+            try
+            {
+                using (var sqlConnection = new SqlConnection(connectionString))
+                {
+                    using (var sqlCommand = new SqlCommand("spGetThemeById", sqlConnection))
+                    {
+                        DataTable dt = new DataTable();
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddWithValue("@CustomerId", id);
+                        sqlConnection.Open();
+                        SqlDataReader dr = sqlCommand.ExecuteReader();
+
+                        while (dr.Read())
+                        {
+                            model.ThemesDetails = new ThemesInfo
+                            {
+                                Id = Convert.ToInt32(dr["Id"].ToString()),
+                                AppName = (dr["AppName"] is DBNull || string.IsNullOrEmpty(dr["AppName"].ToString())) ? "" : dr["AppName"].ToString(),
+                                ColorCode = (dr["ColorCode"] is DBNull || string.IsNullOrEmpty(dr["ColorCode"].ToString())) ? "" : dr["ColorCode"].ToString(),
+                                ButtonColor = (dr["ButtonColor"] is DBNull || string.IsNullOrEmpty(dr["ButtonColor"].ToString())) ? "" : dr["ButtonColor"].ToString(),
+                                LogoImageName = (dr["LogoImageName"] is DBNull || string.IsNullOrEmpty(dr["LogoImageName"].ToString())) ? "" : dr["LogoImageName"].ToString(),
+                                Description = (dr["Description"] is DBNull || string.IsNullOrEmpty(dr["Description"].ToString())) ? "" : dr["Description"].ToString(),
+                                Logo = (dr["Logo"] is DBNull || string.IsNullOrEmpty(dr["Logo"].ToString())) ? null : (byte[])dr["Logo"],
+                                CustomerId = Convert.ToInt32(dr["CustomerId"].ToString()),
+                            };
+
+                        }
+                        sqlConnection.Close();
+                        model.IsSuccess = true;
+                        model.Message = "info-fetch-getthemebyid-success";
+
+                    }
+
+                    return model;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //Handle exception
+                model.IsSuccess = false;
+                model.Message = "info-fetch-getthemebyid-failure";
+
+                return model;
+            }
+
+
+
+        }
         #endregion
     }
 }

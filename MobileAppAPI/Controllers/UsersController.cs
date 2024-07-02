@@ -131,13 +131,13 @@ namespace MobileAppAPI.Controllers
 
 
         [HttpPost]
-        [Route("AddAddress")]
-        public async Task<ActionResult> AddAddress(AddressDTO address)
+        [Route("AddEditAddress")]
+        public async Task<ActionResult> AddEditAddress(AddressDTO address)
         {
             try
             {
 
-                var responseDTO = await _accountService.AddAddress(address);
+                var responseDTO = await _accountService.AddEditAddress(address);
                 if (responseDTO.IsSuccess)
                 {
                     return new OkObjectResult(new { MessageKey = "success" });

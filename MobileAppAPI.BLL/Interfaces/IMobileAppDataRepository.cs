@@ -15,7 +15,7 @@ namespace MobileAppAPI.BLL
         
         Task<UserDetailsDTO> GetAllUsers();
         Task<Boolean> UpdatePassword(UserPersonalDetails details);
-        Task<AddressDTO> AddAddress(AddressDTO address);
+        Task<AddressDTO> AddEditAddress(AddressDTO address);
         Task<UserDTO> CheckLogin(string userName);
 
         Task<string> GetPassword(string userName);
@@ -47,8 +47,12 @@ namespace MobileAppAPI.BLL
         #region Orders
         Task<OrderDTO> SaveOrderByUser(OrderDTO order, DataTable dtOrders);
         Task<OrderDTO> GetAllOrdersById(int userId);
-       // Task<OrderDTO> GetAllOrders();
+        // Task<OrderDTO> GetAllOrders();
         #endregion
 
+
+        #region Theme
+        Task<ThemesDTO> GetThemeById(int id);
+        #endregion
     }
 }

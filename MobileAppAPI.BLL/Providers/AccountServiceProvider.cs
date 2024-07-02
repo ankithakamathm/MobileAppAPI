@@ -54,9 +54,9 @@ namespace MobileAppAPI.BLL.Interfaces
         {
             return repository.checkIfUserExistsAlready(phoneNumber);
         }
-        public Task<AddressDTO> AddAddress(AddressDTO address)
+        public Task<AddressDTO> AddEditAddress(AddressDTO address)
         {
-            return repository.AddAddress(address);
+            return repository.AddEditAddress(address);
         }
 
         public Task<AddressDTO> GetAddressesByUserId(int userId)
