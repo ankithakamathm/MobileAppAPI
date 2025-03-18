@@ -31,14 +31,14 @@ namespace MobileAppAPI.Controllers
         
         [HttpPost]
         [Route("SaveOrder")]
-        public async Task<ActionResult> SaveOrderByUser(OrderDTO order)
+        public async Task<ActionResult> SaveOrderByUser(OrderDTO order, int customerId)
         {
 
 
             try
             {
                DataTable orderItems = Helper.CreateDataTableFroOrderItems(order.OrderDetails.OrderItems);
-                var responseDTO = await _orderService.SaveOrderByUser(order, orderItems);
+                var responseDTO = await _orderService.SaveOrderByUser(order, orderItems, customerId);
                 if (responseDTO.IsSuccess)
                 {
                     return new OkObjectResult(new { MessageKey = "success" });

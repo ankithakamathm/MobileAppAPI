@@ -45,9 +45,9 @@ namespace MobileAppAPI.BLL.Interfaces
             return repository.GetPassword(userName);
         }
 
-        public Task<UserDTO> RegisterUser(string username, string encryptedPassword, string email, string phoneNumber)
+        public Task<UserDTO> RegisterUser(string username, string encryptedPassword, string email, string phoneNumber, int customerId)
         {
-            return repository.RegisterUser(username, encryptedPassword, email, phoneNumber);
+            return repository.RegisterUser(username, encryptedPassword, email, phoneNumber, customerId);
         }
 
         public Task<bool> checkIfUserExistsAlready(string phoneNumber)
@@ -62,6 +62,11 @@ namespace MobileAppAPI.BLL.Interfaces
         public Task<AddressDTO> GetAddressesByUserId(int userId)
         {
             return repository.GetAddressesByUserId(userId);
+        }
+
+        public Task<bool> DeleteAddress(AddressDTO address)
+        {
+            return repository.DeleteAddress(address);
         }
     }
 

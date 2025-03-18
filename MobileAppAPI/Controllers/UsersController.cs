@@ -94,18 +94,18 @@ namespace MobileAppAPI.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task<ActionResult> register(string username, string password, string email, string phoneNumber)
+        public async Task<ActionResult> Register(string name, string password, string email, string mobile, int customerId)
         {
 
 
             try
             {
-                bool res = await _accountService.checkIfUserExistsAlready(phoneNumber);
+                bool res = await _accountService.checkIfUserExistsAlready(mobile);
 
-                if (res) {
+                if (!res) {
                     var encryptedPassword = Helper.Encrypt(password, _configuration["EncryptionKey"]);
 
-                    var responseDTO = await _accountService.RegisterUser(username, encryptedPassword, email, phoneNumber);
+                    var responseDTO = await _accountService.RegisterUser(name, encryptedPassword, email, mobile, customerId);
                     if (responseDTO.IsSuccess)
                     {
                         return new OkObjectResult(new { MessageKey = "success", Result = new { Users = responseDTO.UserInfo } });
@@ -152,6 +152,31 @@ namespace MobileAppAPI.Controllers
                 return new InternalServerErrorObjectResult(new { MessageKey = e.Message });
             }
         }
+
+        [HttpPost]
+        [Route("DeleteAddress")]
+        public async Task<ActionResult> DeletetAddress(AddressDTO address)
+        {
+            try
+            {
+
+                var responseDTO = await _accountService.DeleteAddress(address);
+                if (responseDTO)
+                {
+                    return new OkObjectResult(new { MessageKey = "success" });
+                }
+                else
+                {
+                    return new InternalServerErrorObjectResult(new { MessageKey = responseDTO });
+                }
+            }
+            catch (Exception e)
+            {
+                return new InternalServerErrorObjectResult(new { MessageKey = e.Message });
+            }
+        }
+
+
         [HttpGet]
         [Route("GetAddressesByUserId")]
         public async Task<ActionResult> GetAddressesByUserId(int userId)

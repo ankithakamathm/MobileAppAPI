@@ -160,6 +160,42 @@ namespace MobileAppAPI.DAL
             }
         }
 
+        public async Task<bool> DeleteAddress(AddressDTO address)
+        {
+            bool result = false;
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                using (var sqlCommand = new SqlCommand("spUserDeleteAddress", sqlConnection))
+                {
+                    try
+                    {
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddWithValue("@Id", address.AddAddress.Id);
+                      
+
+                        sqlConnection.Open();
+                        sqlCommand.ExecuteNonQuery();
+
+                        result = true;
+
+                       
+                        //  sqlConnection.Close();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        result = false;
+                    }
+                    finally
+                    {
+                        sqlConnection.Close();
+                    }
+                }
+                return result;
+            }
+        }
+
+
         public async Task<UserDTO> CheckLogin(string userName)
         {
             var model = new UserDTO();
@@ -241,7 +277,7 @@ namespace MobileAppAPI.DAL
                 return result;
             }
         }
-        public async Task<UserDTO> RegisterUser(string username, string encryptedPassword, string email, string phoneNumber)
+        public async Task<UserDTO> RegisterUser(string username, string encryptedPassword, string email, string phoneNumber, int customerId)
         {
             var model = new UserDTO();
             try
@@ -255,6 +291,7 @@ namespace MobileAppAPI.DAL
                         sqlCommand.Parameters.AddWithValue("@Password", encryptedPassword);
                         sqlCommand.Parameters.AddWithValue("@Email", email);
                         sqlCommand.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+                        sqlCommand.Parameters.AddWithValue("@CustomerId", customerId);
                         DataTable dt = new DataTable();
 
 
@@ -393,7 +430,7 @@ namespace MobileAppAPI.DAL
         #endregion
 
         #region category
-        public async Task<CategoryDTO> GetAllCategories()
+        public async Task<CategoryDTO> GetAllCategories(int customerId)
         {
             var model = new CategoryDTO();
             try
@@ -404,7 +441,7 @@ namespace MobileAppAPI.DAL
                     {
                         DataTable dt = new DataTable();
                         sqlCommand.CommandType = CommandType.StoredProcedure;
-
+                        sqlCommand.Parameters.AddWithValue("@CustomerId", customerId);
                         var dataAdapter = new SqlDataAdapter(sqlCommand);
 
                         dataAdapter.Fill(dt);
@@ -445,7 +482,7 @@ namespace MobileAppAPI.DAL
 
 
         #region subcategory
-        public async Task<SubCategoryDTO> GetAllSubCategories()
+        public async Task<SubCategoryDTO> GetAllSubCategories(int customerId)
         {
             var model = new SubCategoryDTO();
             try
@@ -456,7 +493,7 @@ namespace MobileAppAPI.DAL
                     {
                         DataTable dt = new DataTable();
                         sqlCommand.CommandType = CommandType.StoredProcedure;
-
+                        sqlCommand.Parameters.AddWithValue("@CustomerId", customerId);
                         var dataAdapter = new SqlDataAdapter(sqlCommand);
 
                         dataAdapter.Fill(dt);
@@ -630,7 +667,7 @@ namespace MobileAppAPI.DAL
         #endregion
 
         #region Orders
-        public async Task<OrderDTO> SaveOrderByUser(OrderDTO order, DataTable dtOrders)
+        public async Task<OrderDTO> SaveOrderByUser(OrderDTO order, DataTable dtOrders, int customerId)
         {
             var model = new OrderDTO();
            
@@ -654,6 +691,8 @@ namespace MobileAppAPI.DAL
                         sqlCommand.Parameters.AddWithValue("@ZipCode", order.OrderDetails.zip_code);
                         sqlCommand.Parameters.AddWithValue("@TotalPrice", order.OrderDetails.TotalPrice);
                         sqlCommand.Parameters.AddWithValue("@OrderItems", dtOrders);
+                        sqlCommand.Parameters.AddWithValue("@CustomerId", customerId);
+
                         DataTable dt = new DataTable();
                         sqlConnection.Open();
                         sqlCommand.ExecuteNonQuery();

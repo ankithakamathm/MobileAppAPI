@@ -9,7 +9,7 @@ namespace MobileAppAPI.BLL.Interfaces
     public interface ISubCategoryService
     {
 
-        Task<SubCategoryDTO> GetAllSubCategories();
+        Task<SubCategoryDTO> GetAllSubCategories(int customerId);
        
     }
 }

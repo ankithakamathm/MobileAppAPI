@@ -31,13 +31,13 @@ namespace MobileAppAPI.Controllers
         // GET: SubCategory/GetSubCategories
         [HttpGet]
         [Route("GetSubCategories")]
-        public async Task<ActionResult> GetSubCategories()
+        public async Task<ActionResult> GetSubCategories(int customerId)
         {
 
 
             try
             {
-                var responseDTO = await _subCategoryService.GetAllSubCategories();
+                var responseDTO = await _subCategoryService.GetAllSubCategories(customerId);
                 if (responseDTO.IsSuccess)
                 {
                     return new OkObjectResult(new { MessageKey = "success", Result = new { SubCategories = responseDTO.SubCategoryDetails } });

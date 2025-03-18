@@ -13,7 +13,7 @@ namespace MobileAppAPI.BLL.Interfaces
 
         // Task<OrderDTO> GetAllOrders();
 
-        Task<OrderDTO> SaveOrderByUser(OrderDTO order, DataTable dtOrders);
+        Task<OrderDTO> SaveOrderByUser(OrderDTO order, DataTable dtOrders, int customerId);
 
 
     }

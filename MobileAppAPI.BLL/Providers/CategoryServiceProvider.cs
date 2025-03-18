@@ -16,9 +16,9 @@ namespace MobileAppAPI.BLL.Providers
             this.repository = repository;
         }
 
-        public Task<CategoryDTO> GetAllCategories()
+        public Task<CategoryDTO> GetAllCategories(int customerId)
         {
-            return repository.GetAllCategories();
+            return repository.GetAllCategories(customerId);
         }
 
     }

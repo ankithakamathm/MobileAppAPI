@@ -16,10 +16,12 @@ namespace MobileAppAPI.BLL
         Task<UserDetailsDTO> GetAllUsers();
         Task<Boolean> UpdatePassword(UserPersonalDetails details);
         Task<AddressDTO> AddEditAddress(AddressDTO address);
+
+        Task<bool> DeleteAddress(AddressDTO address);
         Task<UserDTO> CheckLogin(string userName);
 
         Task<string> GetPassword(string userName);
-        Task<UserDTO> RegisterUser(string username, string encryptedPassword, string email,string phoneNumber);
+        Task<UserDTO> RegisterUser(string username, string encryptedPassword, string email,string phoneNumber, int customerId);
 
         Task<bool> checkIfUserExistsAlready(string phoneNumber);
 
@@ -28,12 +30,12 @@ namespace MobileAppAPI.BLL
         #endregion
 
         #region Category
-        Task<CategoryDTO> GetAllCategories();
+        Task<CategoryDTO> GetAllCategories(int customerId);
 
         #endregion
 
         #region SubCategory
-        Task<SubCategoryDTO> GetAllSubCategories();
+        Task<SubCategoryDTO> GetAllSubCategories(int customerId);
 
         #endregion
 
@@ -45,7 +47,7 @@ namespace MobileAppAPI.BLL
         #endregion
 
         #region Orders
-        Task<OrderDTO> SaveOrderByUser(OrderDTO order, DataTable dtOrders);
+        Task<OrderDTO> SaveOrderByUser(OrderDTO order, DataTable dtOrders, int customerId);
         Task<OrderDTO> GetAllOrdersById(int userId);
         // Task<OrderDTO> GetAllOrders();
         #endregion
